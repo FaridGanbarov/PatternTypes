@@ -1,10 +1,10 @@
 package org.example;
 
 import org.example.dto.PaymentRequestDto;
-import org.example.system.PaymentContext;
+import org.example.context.PaymentContext;
 import org.example.system.PaymentSystem;
-import org.example.util.JsonPaymentStrategy;
-import org.example.util.XmlPaymentStrategy;
+import org.example.strategy.JsonPaymentStrategy;
+import org.example.strategy.XmlPaymentStrategy;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
