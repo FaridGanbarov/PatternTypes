@@ -10,6 +10,17 @@ public class XmlPaymentStrategy implements PaymentService {
     private final PaymentSystem paymentSystem;
     @Override
     public void processPayment(PaymentRequestDto requestDto) {
+        if (requestDto.getSender() == null || requestDto.getSender().isBlank()) {
+            throw new IllegalArgumentException("Sender cannot be null");
+        }
+
+        if (requestDto.getReceiver() == null || requestDto.getReceiver().isBlank()) {
+            throw new IllegalArgumentException("Receiver cannot be null");
+        }
+
+        if (requestDto.getAmount() <= 0) {
+            throw new IllegalArgumentException("Amount must be positive");
+        }
         String xml=convertToXml(requestDto);
         paymentSystem.sendXml(xml);
     }

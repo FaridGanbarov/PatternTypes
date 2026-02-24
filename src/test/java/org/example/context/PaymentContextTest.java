@@ -2,8 +2,7 @@ package org.example.context;
 
 import org.example.dto.PaymentRequestDto;
 import org.example.service.PaymentService;
-import org.example.strategy.XmlPaymentStrategy;
-import org.example.system.PaymentSystem;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

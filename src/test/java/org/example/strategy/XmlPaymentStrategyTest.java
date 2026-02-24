@@ -4,8 +4,7 @@ import org.example.dto.PaymentRequestDto;
 import org.example.system.PaymentSystem;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class XmlPaymentStrategyTest {
     @Test
@@ -20,41 +19,63 @@ public class XmlPaymentStrategyTest {
     }
 
     @Test
-    void shouldHandleNullSender(){
+    void shouldThrowWhenSenderIsNull() {
         PaymentSystem paymentSystem = new PaymentSystem();
         XmlPaymentStrategy strategy = new XmlPaymentStrategy(paymentSystem);
 
         PaymentRequestDto request = new PaymentRequestDto(null, "Ali", 400);
 
-        assertDoesNotThrow(() -> strategy.processPayment(request));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> strategy.processPayment(request)
+        );
+
+        assertEquals("Sender cannot be null", exception.getMessage());
     }
 
     @Test
-    void shouldHandleNullReceiver(){
+    void shouldThrowWhenReceiverIsNull() {
         PaymentSystem paymentSystem = new PaymentSystem();
         XmlPaymentStrategy strategy = new XmlPaymentStrategy(paymentSystem);
 
         PaymentRequestDto request = new PaymentRequestDto("Farid", null, 700);
 
-        assertDoesNotThrow(() -> strategy.processPayment(request));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> strategy.processPayment(request)
+        );
+
+        assertEquals("Receiver cannot be null", exception.getMessage());
     }
 
     @Test
-    void shouldHandleZeroAmount(){
+    void shouldThrowWhenAmountIsZero() {
         PaymentSystem paymentSystem = new PaymentSystem();
         XmlPaymentStrategy strategy = new XmlPaymentStrategy(paymentSystem);
+
         PaymentRequestDto request = new PaymentRequestDto("Farid", "Ali", 0);
 
-        assertDoesNotThrow(() -> strategy.processPayment(request));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> strategy.processPayment(request)
+        );
+
+        assertEquals("Amount must be positive", exception.getMessage());
     }
 
     @Test
-    void shouldHandleNegativeAmount(){
+    void shouldThrowWhenAmountIsNegative() {
         PaymentSystem paymentSystem = new PaymentSystem();
         XmlPaymentStrategy strategy = new XmlPaymentStrategy(paymentSystem);
+
         PaymentRequestDto request = new PaymentRequestDto("Farid", "Ali", -100);
 
-        assertDoesNotThrow(() -> strategy.processPayment(request));
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> strategy.processPayment(request)
+        );
+
+        assertEquals("Amount must be positive", exception.getMessage());
     }
 
 }
